@@ -1,5 +1,10 @@
 package entities;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class PizzaFamilySize implements Pizza {
 
 	private Pizza pizza;
@@ -30,12 +35,5 @@ public class PizzaFamilySize implements Pizza {
 		return "Family size for Pizza" + " - Calories: x" + this.calories + " - Price: " + price;
 	}
 
-	public Pizza getPizza() {
-		return pizza;
-	}
-
-	public void setPizza(Pizza pizza) {
-		this.pizza = pizza;
-	}
 
 }

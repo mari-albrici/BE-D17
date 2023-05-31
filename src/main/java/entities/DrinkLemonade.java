@@ -1,5 +1,8 @@
 package entities;
 
+import lombok.Getter;
+
+@Getter
 public class DrinkLemonade extends Drink {
 
 	public DrinkLemonade() {

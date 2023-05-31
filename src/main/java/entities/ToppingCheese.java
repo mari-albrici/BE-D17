@@ -1,12 +1,8 @@
-/**
- * 
- */
 package entities;
 
-/**
- * @author gabri
- *
- */
+import lombok.Getter;
+
+@Getter
 public class ToppingCheese extends PizzaTopping {
 
 	public ToppingCheese(Pizza pizza) {

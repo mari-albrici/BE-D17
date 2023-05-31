@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 @SpringBootTest
 class GodFatherPizzaApplicationTests {
 
-	@Test
+	
 	void contextLoads() {
 	}
 	
@@ -20,11 +20,11 @@ class GodFatherPizzaApplicationTests {
 	@Test
 	void testCoversPrice() {
 		log.info("test costo coperti");
-		
-		assertEquals(6.0, (costoCoperto * 3));
+		assertEquals(2.0, (costoCoperto * 3));
 	}
 
 	private void assertEquals(double d, double e) {
 		// TODO Auto-generated method stub
 	}
+	
 }

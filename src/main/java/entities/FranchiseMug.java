@@ -1,5 +1,8 @@
 package entities;
 
+import lombok.Getter;
+
+@Getter
 public class FranchiseMug extends Franchise {
 	
 	

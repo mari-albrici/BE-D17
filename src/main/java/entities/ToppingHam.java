@@ -1,12 +1,7 @@
-/**
- * 
- */
+
 package entities;
 
-/**
- * @author gabri
- *
- */
+
 public class ToppingHam extends PizzaTopping {
 
 	public ToppingHam(Pizza pizza) {

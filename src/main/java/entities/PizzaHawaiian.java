@@ -1,5 +1,8 @@
 package entities;
 
+import lombok.Getter;
+
+@Getter
 public class PizzaHawaiian extends PizzaBase {
 
 	public PizzaHawaiian() {

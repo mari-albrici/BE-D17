@@ -1,33 +1,76 @@
 package application;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 
 import config.MenuConfig;
+import entities.Franchise;
+import entities.MenuItem;
 import entities.Order;
+import entities.OrderStatus;
+import entities.PizzaMargherita;
+import entities.Table;
+import entities.TableStatus;
 
 @Component
 public class Ordini implements CommandLineRunner{
 
-	private Order order;
 	private AnnotationConfigApplicationContext ctx;
 	
 	@Value("${application.costoCoperto}")
 	double costoCoperto;
 
+	Table tableOne() {
+		return new Table(1, 4, TableStatus.RESERVED);
+	}
+
+	Order orderOne() {
+		
+	    Order orderA = new Order();
+	    
+	    ctx = new AnnotationConfigApplicationContext(MenuConfig.class);
+	    
+	    orderA.setCovers(3);
+	    orderA.setTable(tableOne());
+	    orderA.setOrderNum(001);
+	    orderA.setOrderStatus(OrderStatus.READY);
+
+	    Map<MenuItem, String> orderList = new LinkedHashMap<>();
+	    
+	    PizzaMargherita pizza = ctx.getBean(PizzaMargherita.class);
+	    Franchise mug = ctx.getBean(Franchise.class);
+	    
+	    orderList.put(mug, "pacco regalo");
+	    orderList.put(pizza, "");
+
+	    orderA.setOrderList(orderList);
+
+	    double bill = 0.0;
+
+	    for (MenuItem item : orderList.keySet()) {
+	        bill += item.getPrice();
+	    }
+
+	    orderA.setBill(bill);
+
+	    
+	    return orderA;
+	}
+	
 	@Override
 	public void run(String... args) throws Exception {
-		ctx = new AnnotationConfigApplicationContext(MenuConfig.class);
-		order = (Order) ctx.getBean("orderOne");
 		
-		double partialBill = order.getBill();
-		double coversBill = (order.getCovers() * costoCoperto);
+		double partialBill = orderOne().getBill();
+		double coversBill = (orderOne().getCovers() * costoCoperto);
 		System.out.println();
-		System.out.println("******* ORDER: " + order.getOrderNum() + " *******");
+		System.out.println("******* ORDER: " + orderOne().getOrderNum() + " *******");
 		System.out.println("Elenco ordine: ");
-		order.getOrderList().forEach((item, note) -> System.out.println(item.getName() + " - NOTE: " + note.toString()));
+		orderOne().getOrderList().forEach((item, note) -> System.out.println(item.getName() + " - NOTE: " + note.toString()));
 		System.out.println("Totale parziale: " + partialBill + "$");
 		System.out.println("Totale coperti: " + coversBill + "$");
 		System.out.println("Totale ordine: " + (partialBill + coversBill) + "$");
