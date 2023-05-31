@@ -18,7 +18,7 @@ import entities.Table;
 import entities.TableStatus;
 
 @Component
-public class Ordini implements CommandLineRunner{
+public class GestioneOrdini implements CommandLineRunner{
 
 	private AnnotationConfigApplicationContext ctx;
 	

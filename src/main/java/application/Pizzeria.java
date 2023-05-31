@@ -6,10 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import entities.Order;
 
 @SpringBootApplication
-public class GodFatherPizzaApplication {
+public class Pizzeria {
 
 	public static void main(String[] args) {
-		SpringApplication.run(GodFatherPizzaApplication.class, args);
+		SpringApplication.run(Pizzeria.class, args);
 
 		GestioneMenu stampa = new GestioneMenu();
 		stampa.stampaMenu();

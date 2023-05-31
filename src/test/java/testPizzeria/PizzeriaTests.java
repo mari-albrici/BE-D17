@@ -1,4 +1,4 @@
-package it.epicode.be.godfather;
+package testPizzeria;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @SpringBootTest
-class GodFatherPizzaApplicationTests {
+class PizzeriaTests {
 
 	
 	void contextLoads() {
