@@ -15,6 +15,7 @@ import entities.Order;
 import entities.OrderStatus;
 import entities.PizzaMargherita;
 import entities.Table;
+import entities.Table.TableBuilder;
 import entities.TableStatus;
 
 @Component
@@ -24,10 +25,8 @@ public class GestioneOrdini implements CommandLineRunner{
 	
 	@Value("${application.costoCoperto}")
 	double costoCoperto;
-
-	Table tableOne() {
-		return new Table(1, 4, TableStatus.RESERVED);
-	}
+	
+	TableBuilder tableOne = Table.builder().tableNum(1).places(4).tableStatus(TableStatus.RESERVED);
 
 	Order orderOne() {
 		
@@ -36,7 +35,7 @@ public class GestioneOrdini implements CommandLineRunner{
 	    ctx = new AnnotationConfigApplicationContext(MenuConfig.class);
 	    
 	    orderA.setCovers(3);
-	    orderA.setTable(tableOne());
+	    orderA.setTable(tableOne);
 	    orderA.setOrderNum(001);
 	    orderA.setOrderStatus(OrderStatus.READY);
 
@@ -57,8 +56,7 @@ public class GestioneOrdini implements CommandLineRunner{
 	    }
 
 	    orderA.setBill(bill);
-
-	    
+	
 	    return orderA;
 	}
 	
@@ -69,7 +67,7 @@ public class GestioneOrdini implements CommandLineRunner{
 		double coversBill = (orderOne().getCovers() * costoCoperto);
 		System.out.println();
 		System.out.println("******* ORDER: " + orderOne().getOrderNum() + " *******");
-		System.out.println("Elenco ordine: ");
+		System.out.println("Comanda: ");
 		orderOne().getOrderList().forEach((item, note) -> System.out.println(item.getName() + " - NOTE: " + note.toString()));
 		System.out.println("Totale parziale: " + partialBill + "$");
 		System.out.println("Totale coperti: " + coversBill + "$");

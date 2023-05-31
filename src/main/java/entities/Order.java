@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
+import entities.Table.TableBuilder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -36,4 +37,10 @@ public class Order{
 		this.orderList = orderList;
 		this.bill = bill;
 	} 
+	
+	
+	public Table setTable(TableBuilder tableOne) {
+		return table;
+	}
+	
 }
