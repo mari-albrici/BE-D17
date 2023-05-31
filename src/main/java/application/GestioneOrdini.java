@@ -14,6 +14,7 @@ import entities.MenuItem;
 import entities.Order;
 import entities.OrderStatus;
 import entities.PizzaMargherita;
+import entities.PizzaHawaiian;
 import entities.Table;
 import entities.Table.TableBuilder;
 import entities.TableStatus;
@@ -21,18 +22,17 @@ import entities.TableStatus;
 @Component
 public class GestioneOrdini implements CommandLineRunner{
 
-	private AnnotationConfigApplicationContext ctx;
+	private AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(MenuConfig.class);
 	
 	@Value("${application.costoCoperto}")
 	double costoCoperto;
 	
 	TableBuilder tableOne = Table.builder().tableNum(1).places(4).tableStatus(TableStatus.RESERVED);
+	TableBuilder tableTwo = Table.builder().tableNum(2).places(6).tableStatus(TableStatus.RESERVED);
 
 	Order orderOne() {
-		
-	    Order orderA = new Order();
 	    
-	    ctx = new AnnotationConfigApplicationContext(MenuConfig.class);
+	    Order orderA = ctx.getBean(Order.class);
 	    
 	    orderA.setCovers(3);
 	    orderA.setTable(tableOne);
@@ -60,6 +60,42 @@ public class GestioneOrdini implements CommandLineRunner{
 	    return orderA;
 	}
 	
+	Order orderTwo() {
+	    
+	    Order orderB = ctx.getBean(Order.class);
+	    
+	    orderB.setCovers(5);
+	    orderB.setTable(tableTwo);
+	    orderB.setOrderNum(002);
+	    orderB.setOrderStatus(OrderStatus.PREPARING);
+
+	    Map<MenuItem, String> orderList = new LinkedHashMap<>();
+	    
+	    PizzaHawaiian pizza = ctx.getBean(PizzaHawaiian.class);
+	    PizzaHawaiian pizza2 = ctx.getBean(PizzaHawaiian.class);
+	    PizzaHawaiian pizza3 = ctx.getBean(PizzaHawaiian.class);
+	    PizzaHawaiian pizza4 = ctx.getBean(PizzaHawaiian.class);
+	    PizzaHawaiian pizza5 = ctx.getBean(PizzaHawaiian.class);
+
+	    orderList.put(pizza, "no pomodoro");
+	    orderList.put(pizza2, "doppio ananas");
+	    orderList.put(pizza3, "bacon no prosciutto");
+	    orderList.put(pizza4, "");
+	    orderList.put(pizza5, "");
+
+	    orderB.setOrderList(orderList);
+
+	    double bill = 0.0;
+
+	    for (MenuItem item : orderList.keySet()) {
+	        bill += item.getPrice();
+	    }
+
+	    orderB.setBill(bill);
+	
+	    return orderB;
+	}
+	
 	@Override
 	public void run(String... args) throws Exception {
 		
@@ -72,6 +108,17 @@ public class GestioneOrdini implements CommandLineRunner{
 		System.out.println("Totale parziale: " + partialBill + "$");
 		System.out.println("Totale coperti: " + coversBill + "$");
 		System.out.println("Totale ordine: " + (partialBill + coversBill) + "$");
+		System.out.println();
+		
+		double partialBill2 = orderTwo().getBill();
+		double coversBill2 = (orderTwo().getCovers() * costoCoperto);
+		System.out.println();
+		System.out.println("******* ORDER: " + orderTwo().getOrderNum() + " *******");
+		System.out.println("Comanda: ");
+		orderTwo().getOrderList().forEach((item, note) -> System.out.println(item.getName() + " - NOTE: " + note.toString()));
+		System.out.println("Totale parziale: " + partialBill2 + "$");
+		System.out.println("Totale coperti: " + coversBill2 + "$");
+		System.out.println("Totale ordine: " + (partialBill2 + coversBill2) + "$");
 		System.out.println();
 	}
 }

@@ -9,6 +9,7 @@ import entities.DrinkLemonade;
 import entities.Franchise;
 import entities.FranchiseMug;
 import entities.Menu;
+import entities.Order;
 import entities.PizzaHawaiian;
 import entities.PizzaMargherita;
 import entities.PizzaSalami;
@@ -68,6 +69,12 @@ public class MenuConfig {
 	@Scope("prototype")
 	Franchise franchiseMug() {
 		return new FranchiseMug();
+	}
+	
+	@Bean
+	@Scope("prototype")
+	Order order() {
+		return new Order();
 	}
 	
 }
