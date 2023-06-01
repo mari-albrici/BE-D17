@@ -15,8 +15,7 @@ import entities.Order;
 import entities.OrderStatus;
 import entities.PizzaMargherita;
 import entities.PizzaHawaiian;
-import entities.Table;
-import entities.Table.TableBuilder;
+import entities.Tables;
 import entities.TableStatus;
 
 @Component
@@ -27,8 +26,8 @@ public class GestioneOrdini implements CommandLineRunner{
 	@Value("${application.costoCoperto}")
 	double costoCoperto;
 	
-	TableBuilder tableOne = Table.builder().tableNum(1).places(4).tableStatus(TableStatus.RESERVED);
-	TableBuilder tableTwo = Table.builder().tableNum(2).places(6).tableStatus(TableStatus.RESERVED);
+	Tables tableOne = new Tables(1, 4, TableStatus.RESERVED);
+	Tables tableTwo =  new Tables(2, 6, TableStatus.RESERVED);
 
 	Order orderOne() {
 	    
